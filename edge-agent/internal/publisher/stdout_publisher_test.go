@@ -2,6 +2,7 @@ package publisher
 
 import (
 	"bytes"
+	"context"
 	"io"
 	"os"
 	"strings"
@@ -30,7 +31,7 @@ func TestPublishWritesExpectedLine(t *testing.T) {
 	}
 	os.Stdout = w
 
-	pubErr := p.Publish("topic-test", m)
+	pubErr := p.Publish(context.Background(), "topic-test", m)
 	_ = w.Close()
 	os.Stdout = oldStdout
 	if pubErr != nil {
