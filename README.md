@@ -17,33 +17,32 @@
 ```mermaid
 graph TD
     subgraph "🛰️ DATA COLLECTION LAYER"
-        EA[Edge Agent - Go] -->|Zero-Alloc Collection| K[Kafka Secure Bus]
-        EA -.->|OTLP/gRPC| J[Jaeger Tracing]
+        EA["Edge Agent - Go"] -->|Zero-Alloc Collection| K["Kafka Secure Bus"]
+        EA -.->|OTLP/gRPC| J["Jaeger Tracing"]
     end
 
     subgraph "⚡ REAL-TIME BACKBONE"
-        SR[Schema Registry] <-.-> EA
-        SR <-.-> KS[Kafka Sink - Python]
+        SR["Schema Registry"] <-.-> EA
+        SR <-.-> KS["Kafka Sink - Python"]
         K -->|High-Throughput Avro Stream| KS
     end
 
     subgraph "🏛️ STORAGE ENGINE"
-        KS -->|Batch Insert 10k/sec| CH[(Clickhouse OLAP)]
-        CH -->|Materialized Views| TT[Top Talkers MV]
-        CH -->|Materialized Views| BM[Bandwidth Hourly MV]
+        KS -->|Batch Insert 10k/sec| CH[("Clickhouse OLAP")]
+        CH -->|"Materialized Views"| TT["Top Talkers MV"]
+        CH -->|"Materialized Views"| BM["Bandwidth Hourly MV"]
     end
 
     subgraph "📡 INTELLIGENCE & API LAYER"
-        API[FastAPI Backend] -->|Sub-ms Aggregates| CH
-        API -.->|Metrics| P[Prometheus]
+        API["FastAPI Backend"] -->|Sub-ms Aggregates| CH
+        API -.->|Metrics| P["Prometheus"]
         API -.->|Traces| J
-        G[Grafana] -->|Unified Dashboard| CH
-        G -->|Log Correlation| L[Loki]
+        G["Grafana"] -->|Unified Dashboard| CH
+        G -->|Log Correlation| L["Loki"]
     end
 
-    classDef hardware fill:#f9f,stroke:#333,stroke-width:2px;
     classDef secure fill:#bbf,stroke:#333,stroke-width:2px;
-    classKS secure;
+    class EA,KS,SR secure;
 ```
 
 ---
@@ -81,7 +80,9 @@ graph TD
 
 Watch the real-time NOC Dashboard capturing data anomalies and distributed traces:
 
-![NOC Dashboard View](./docs/media/operational_telemetry_demo_1776062192689.webp)
+<div align="center">
+  <img src="./docs/media/operational_telemetry_demo_1776062192689.webp" width="100%" alt="NOC Dashboard View">
+</div>
 
 ---
 
