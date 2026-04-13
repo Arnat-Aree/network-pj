@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""FastAPI read API over ClickHouse (Epic 3.1 — lab scope)."""
+"""FastAPI read API over ClickHouse (Enterprise Analytics)."""
 
 from __future__ import annotations
 
@@ -44,7 +44,7 @@ class Settings(BaseSettings):
     ch_host: str = Field(default="localhost", description="ClickHouse HTTP host")
     ch_port: int = Field(default=8123, description="ClickHouse HTTP port")
     ch_user: str = Field(default="default")
-    ch_password: str = Field(default="lab")
+    ch_password: str = Field(default="NTI_Secure_2026")
     api_key: str = Field(default="admin-api-key", description="Master API Key")
 
 
@@ -69,7 +69,7 @@ async def get_api_key(api_key: str = Security(api_key_header)):
     return api_key
 app = FastAPI(
     title="Network Telemetry API",
-    description="Lab API for aggregated metrics in ClickHouse (see AI_MASTER_PLAN.md).",
+    description="Enterprise API for aggregated metrics in ClickHouse.",
     version="0.1.0",
 )
 

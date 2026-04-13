@@ -1,5 +1,5 @@
 # 🏛️ Master Technical Specification: Network Telemetry Intelligence (NTI)
-## **Enterprise Operational Manual & Architectural Bible v7.0 (Hardcore Edition)**
+## **Enterprise Operational Manual & Architectural Bible v7.0**
 **Classification:** Confidential / Carrier-Grade Telemetry  
 **Target Uptime:** 99.999% Service Availability  
 **Architectural Standard:** Event-Driven Columnar OLAP  

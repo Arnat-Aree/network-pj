@@ -7,7 +7,7 @@ This guide provides a comprehensive, step-by-step procedure for deploying the Ne
 ## 1. Prerequisites & System Requirements
 
 ### 💻 Hardware Specifications
-For a stable lab/production environment, ensure your host meets these minimums:
+For a stable enterprise environment, ensure your host meets these minimums:
 - **CPU**: 4 Cores (Dedicated)
 - **RAM**: 8 GB (16 GB Recommended for large ClickHouse buffers)
 - **Disk**: 50 GB SSD (NVMe preferred for high IOPS ClickHouse operations)
@@ -51,7 +51,7 @@ Clone `.env.sample` to `.env` and adjust the variables based on your network top
 
 | Variable | Default Value | Technical Impact |
 | :--- | :--- | :--- |
-| `NTA_CH_PASSWORD` | `lab` | Root password for ClickHouse. |
+| `NTA_CH_PASSWORD` | `NTI_Secure_2026` | Root password for ClickHouse. |
 | `NTA_API_KEY` | `hardcore-production-key-2026` | Master key for the FastAPI analytics layer. |
 | `NTA_KAFKA_TLS` | `true` | When true, services will use port 9093 with SSL/TLS. |
 | `NTA_EDGE_INTERVAL_SEC` | `1` | Collection frequency. Lowering this increases load on Kafka/CH. |

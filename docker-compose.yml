@@ -77,7 +77,7 @@ services:
     environment:
       CLICKHOUSE_DB: network_telemetry
       CLICKHOUSE_USER: ${NTA_CH_USER:-default}
-      CLICKHOUSE_PASSWORD: ${NTA_CH_PASSWORD:-lab}
+      CLICKHOUSE_PASSWORD: ${NTA_CH_PASSWORD:-NTI_Secure_2026}
       CLICKHOUSE_SECURE_CERT_DIR: /etc/clickhouse/certs
     volumes:
       - clickhouse_data:/var/lib/clickhouse
@@ -152,7 +152,7 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
-    hostname: lab-api
+    hostname: nti-api
     depends_on:
       clickhouse:
         condition: service_healthy
@@ -169,8 +169,7 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
-    entrypoint: ["python", "backend/kafka_clickhouse_sink.py"]
-    command: ["--kafka", "kafka:9092", "--ch-host", "clickhouse", "--ch-password", "lab"]
+    command: ["--kafka", "kafka:9092", "--ch-host", "clickhouse", "--ch-password", "NTI_Secure_2026", "--group", "nti-storage-sink"]
     depends_on:
       kafka:
         condition: service_healthy

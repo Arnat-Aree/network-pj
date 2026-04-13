@@ -14,5 +14,5 @@ datasources:
       username: default
       defaultDatabase: network_telemetry
     secureJsonData:
-      password: lab
+      password: NTI_Secure_2026
 

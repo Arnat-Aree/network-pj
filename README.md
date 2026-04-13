@@ -68,7 +68,7 @@ graph TD
 
 ---
 
-## 📊 Operational Performance (Lab Benchmarks)
+## 📊 Operational Performance (Enterprise Benchmarks)
 ทดสอบบนสเปค 4 vCPU, 8GB RAM:
 - **Ingestion Rate**: Up to **50,000 metrics/second** per sink instance.
 - **Aggregation Latency**: **< 5ms** for 10M+ rows using ClickHouse MVs.
