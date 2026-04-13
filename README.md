@@ -76,12 +76,26 @@ graph TD
 
 ---
 
-## 📺 Live Operational Demo
+## 📺 Enterprise Observability Gallery
 
-Watch the real-time NOC Dashboard capturing data anomalies and distributed traces:
+Explore the three layers of our production-ready telemetry stack:
 
+### 📊 Layer 1: NOC Operational Dashboard (Grafana)
+*Real-time bandwidth, Top Talkers (Materialized Views), and pipeline health.*
 <div align="center">
-  <img src="./docs/media/operational_telemetry_demo_1776062192689.webp" width="100%" alt="NOC Dashboard View">
+  <img src="./docs/media/network_telemetry_dashboard_1776062357071.png" width="90%" alt="NOC Dashboard">
+</div>
+
+### 🧭 Layer 2: Distributed Tracing (Jaeger)
+*Hop-by-hop latency analysis from Edge Agent to ClickHouse Storage.*
+<div align="center">
+  <img src="./docs/media/jaeger_trace_details_1776062908024.png" width="90%" alt="Distributed Tracing">
+</div>
+
+### 🔍 Layer 3: Centralized Log Analytics (Loki)
+*Structured JSON logs with high-cardinality indexing and 7-day retention.*
+<div align="center">
+  <img src="./docs/media/loki_logs_broad_1776062676020.png" width="90%" alt="Loki Logs">
 </div>
 
 ---
