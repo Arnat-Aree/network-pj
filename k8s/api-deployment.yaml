@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nta-api
+  labels:
+    app: nta-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nta-api
+  template:
+    metadata:
+      labels:
+        app: nta-api
+    spec:
+      serviceAccountName: nta-api-sa
+      containers:
+        - name: nta-api
+          image: network-pj/backend-api:latest
+          envFrom:
+            - secretRef:
+                name: nta-secrets
+          ports:
+            - containerPort: 8000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nta-api
+spec:
+  selector:
+    app: nta-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: ClusterIP

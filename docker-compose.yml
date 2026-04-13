@@ -1,0 +1,215 @@
+# Consolidated Production Stack
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.1
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.6.1
+    hostname: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      # TLS and SASL listeners
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:9092,SSL://0.0.0.0:9093"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092,SSL://localhost:9093"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "PLAINTEXT:PLAINTEXT,SSL:SSL"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      # SSL keystore/truststore configuration
+      KAFKA_SSL_KEYSTORE_LOCATION: /etc/kafka/secrets/keystore.jks
+      KAFKA_SSL_KEYSTORE_PASSWORD: changeit
+      KAFKA_SSL_KEY_PASSWORD: changeit
+      KAFKA_SSL_TRUSTSTORE_LOCATION: /etc/kafka/secrets/truststore.jks
+      KAFKA_SSL_TRUSTSTORE_PASSWORD: changeit
+      KAFKA_SSL_KEYSTORE_FILENAME: keystore.jks
+      KAFKA_SSL_TRUSTSTORE_FILENAME: truststore.jks
+      # Required by Confluent startup scripts to auto-configure listeners
+      KAFKA_SSL_KEY_CREDENTIALS: kafka_password.txt
+      KAFKA_SSL_KEYSTORE_CREDENTIALS: kafka_password.txt
+      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: kafka_password.txt
+      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ""
+      KAFKA_SSL_CLIENT_AUTH: none
+    volumes:
+      - ./certs:/etc/kafka/secrets:ro
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "localhost:9092"]
+      interval: 10s
+      timeout: 10s
+      retries: 8
+      start_period: 30s
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.6.1
+    hostname: schema-registry
+    depends_on:
+      - kafka
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://kafka:9092'
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.8
+    hostname: clickhouse
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    environment:
+      CLICKHOUSE_DB: network_telemetry
+      CLICKHOUSE_USER: ${NTA_CH_USER:-default}
+      CLICKHOUSE_PASSWORD: ${NTA_CH_PASSWORD:-lab}
+      CLICKHOUSE_SECURE_CERT_DIR: /etc/clickhouse/certs
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - ./certs:/etc/clickhouse/certs:ro
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8123/ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 15s
+
+  grafana:
+    image: grafana/grafana-oss:11.1.0
+    hostname: grafana
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD:-admin}
+      GF_INSTALL_PLUGINS: grafana-clickhouse-datasource
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    hostname: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+
+  loki:
+    image: grafana/loki:2.9.1
+    hostname: loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./monitoring/loki/loki-config.yaml:/etc/loki/local-config.yaml:ro
+      - loki_data:/loki
+
+  promtail:
+    image: grafana/promtail:2.9.1
+    hostname: promtail
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./monitoring/promtail/promtail-config.yaml:/etc/promtail/config.yml:ro
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.47
+    hostname: jaeger
+    ports:
+      - "16686:16686"
+      - "4317:4317" # OTLP gRPC
+      - "4318:4318" # OTLP HTTP
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+
+  backend-api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    hostname: lab-api
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+      jaeger:
+        condition: service_started
+    ports:
+      - "8000:8000"
+    env_file: .env
+    environment:
+      NTA_CH_HOST: clickhouse
+      OTEL_COLLECTOR: jaeger:4317
+
+  kafka-sink:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    entrypoint: ["python", "backend/kafka_clickhouse_sink.py"]
+    command: ["--kafka", "kafka:9092", "--ch-host", "clickhouse", "--ch-password", "lab"]
+    depends_on:
+      kafka:
+        condition: service_healthy
+      clickhouse:
+        condition: service_healthy
+    env_file: .env
+
+  mock-producer:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    entrypoint: ["python", "backend/mock_producer.py"]
+    command: ["--bootstrap", "kafka:9092", "--interval", "0.5", "--count", "0"]
+    depends_on:
+      kafka:
+        condition: service_healthy
+    env_file: .env
+
+  edge-agent:
+    build:
+      context: .
+      dockerfile: edge-agent/Dockerfile
+    hostname: edge-agent
+    depends_on:
+      kafka:
+        condition: service_healthy
+      jaeger:
+        condition: service_started
+    ports:
+      - "9091:9091"
+    env_file: .env
+    environment:
+      NTA_KAFKA_BROKERS: "kafka:9092"
+      NTA_KAFKA_TOPIC: ${NTA_KAFKA_TOPIC:-network-telemetry-avro}
+      NTA_PUBLISHER: "kafka"
+      NTA_REGISTRY_URL: "http://schema-registry:8081"
+      OTEL_COLLECTOR: "jaeger:4317"
+
+volumes:
+  clickhouse_data:
+  prometheus_data:
+  loki_data:

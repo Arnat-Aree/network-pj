@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edge-agent
+  labels:
+    app: edge-agent
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: edge-agent
+  template:
+    metadata:
+      labels:
+        app: edge-agent
+    spec:
+      serviceAccountName: edge-agent-sa
+      containers:
+        - name: edge-agent
+          image: network-pj/edge-agent:latest
+          envFrom:
+            - secretRef:
+                name: nta-secrets
+          ports:
+            - containerPort: 9090 # metrics
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 9090
+            initialDelaySeconds: 10
+            periodSeconds: 10

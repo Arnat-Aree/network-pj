@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "NetworkMetric",
+  "namespace": "nta.telemetry",
+  "fields": [
+    { "name": "ts", "type": "string" },
+    { "name": "src_ip", "type": "string" },
+    { "name": "dst_ip", "type": "string" },
+    { "name": "src_port", "type": "int" },
+    { "name": "dst_port", "type": "int" },
+    { "name": "protocol", "type": "string" },
+    { "name": "bytes", "type": "long" },
+    { "name": "packets", "type": "long" }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "id": null,
+  "uid": "network-telemetry-main",
+  "title": "Network Telemetry (Hardcore Enterprise)",
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 2,
+  "refresh": "5s",
+  "panels": [
+    {
+      "id": 1,
+      "type": "timeseries",
+      "title": "Bandwidth per Minute (Optimized)",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-network-telemetry"
+      },
+      "targets": [
+        {
+          "format": 1,
+          "queryType": "sql",
+          "rawSql": "SELECT minute, sumMerge(total_bytes) * 8 AS total_bits FROM network_telemetry.bandwidth_minutely GROUP BY minute ORDER BY minute",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps"
+        }
+      },
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 0 }
+    },
+    {
+      "id": 2,
+      "type": "table",
+      "title": "Top Talkers (Optimized)",
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-network-telemetry"
+      },
+      "targets": [
+        {
+          "format": 0,
+          "queryType": "sql",
+          "rawSql": "SELECT toString(src_ip) AS src_ip, sumMerge(total_bytes) AS total_bytes, sumMerge(total_packets) AS total_packets, max(last_seen) AS last_seen FROM network_telemetry.top_talkers GROUP BY src_ip ORDER BY total_bytes DESC LIMIT 20",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 7 }
+    },
+    {
+      "id": 3,
+      "type": "logs",
+      "title": "System Logs (Loki)",
+      "datasource": {
+        "type": "loki",
+        "uid": "loki"
+      },
+      "targets": [
+        {
+          "expr": "{container=~\"network-pj.*\"}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 14 }
+    }
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  }
+}
+

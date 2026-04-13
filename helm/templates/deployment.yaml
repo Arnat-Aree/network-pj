@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "network-pj.fullname" . }}-edge
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "network-pj.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "network-pj.fullname" . }}
+    spec:
+      containers:
+        - name: edge-agent
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: 9090

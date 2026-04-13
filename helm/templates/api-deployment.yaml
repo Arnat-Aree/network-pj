@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "network-pj.fullname" . }}-api
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "network-pj.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "network-pj.fullname" . }}
+    spec:
+      containers:
+        - name: nta-api
+          image: {{ .Values.image.repository }}-api:{{ .Values.image.tag }}
+          ports:
+            - containerPort: 8000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10

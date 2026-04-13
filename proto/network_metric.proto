@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package nta.telemetry.v1;
+
+option go_package = "network-pj/edge-agent/internal/pb;pb";
+
+message NetworkMetric {
+  string ts = 1;
+  string src_ip = 2;
+  string dst_ip = 3;
+  uint32 src_port = 4;
+  uint32 dst_port = 5;
+  string protocol = 6;
+  uint64 bytes = 7;
+  uint64 packets = 8;
+}
