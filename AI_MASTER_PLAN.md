@@ -1,4 +1,4 @@
-# Enterprise Network Traffic Analyzer — AI Architect Plan
+# Network Telemetry Intelligence (NTI) — AI Architect Plan
 
 เอกสารนี้เป็น **Blueprint ระดับ Enterprise Architecture** สำหรับ Intelligent Network Traffic Analyzer ที่ใช้เป็น Context เริ่มต้นให้ AI (เช่น Claude / GPT) คิดแบบ System Architect — เหมาะสำหรับโปรไฟล์ระดับ **Senior / Network Automation Engineer**
 

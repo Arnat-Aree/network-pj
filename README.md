@@ -1,4 +1,4 @@
-# 🚀 Enterprise Network Telemetry Analyzer (NTA) v7.0
+# 🚀 Network Telemetry Intelligence (NTI) v7.0
 ### *Next-Generation Intelligent Traffic Analysis & Observability Cloud-Native Stack*
 
 [![Status](https://img.shields.io/badge/Status-Production--Ready-brightgreen?style=for-the-badge&logo=rocket)](https://github.com/)
