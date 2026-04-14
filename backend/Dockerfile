@@ -9,14 +9,16 @@ RUN apt-get update && apt-get upgrade -y && \
 
         # Copy requirements and install
         COPY --chown=nonroot:nonroot backend/requirements.txt ./requirements.txt
-        RUN pip install --no-cache-dir --upgrade pip setuptools wheel && pip install --no-cache-dir -r requirements.txt
+        RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
+            pip install --no-cache-dir -r requirements.txt && \
+                pip uninstall -y setuptools wheel
 
-        # Maintain host-like structure so parents[1] in codec.py points to the right place
-        COPY --chown=nonroot:nonroot schemas ./schemas
-        COPY --chown=nonroot:nonroot backend ./backend
+                # Maintain host-like structure so parents[1] in codec.py points to the right place
+                COPY --chown=nonroot:nonroot schemas ./schemas
+                COPY --chown=nonroot:nonroot backend ./backend
 
-        EXPOSE 8000
-        USER nonroot:nonroot
-        ENV PYTHONPATH=/app
-        CMD ["uvicorn", "backend.api:app", "--host", "0.0.0.0", "--port", "8000"]
-        
+                EXPOSE 8000
+                USER nonroot:nonroot
+                ENV PYTHONPATH=/app
+                CMD ["uvicorn", "backend.api:app", "--host", "0.0.0.0", "--port", "8000"]
+                
