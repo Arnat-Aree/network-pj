@@ -4,7 +4,7 @@ import os
 import struct
 import requests
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 from fastavro import parse_schema, schemaless_reader, schemaless_writer
 
@@ -14,7 +14,7 @@ LOCAL_SCHEMA = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
 SCHEMA = parse_schema(LOCAL_SCHEMA)
 
 # Cache for schema ID
-_SCHEMA_ID: int | None = None
+_SCHEMA_ID: Optional[int] = None
 
 
 def get_schema_id() -> int:

@@ -30,9 +30,9 @@ Go to the **Explore** icon (compass) and select **Loki** as the datasource.
 #### Useful Query Snippets:
 | Objective | LogQL Query |
 | :--- | :--- |
-| **All Agent Logs** | `{container="network-pj-edge-agent-1"}` |
-| **Filter Errors** | `{container="network-pj-edge-agent-1"} \|= "error" \|= "kafka"` |
-| **Search by IP** | `{container="network-pj-kafka-sink-1"} \|~ "192.168.1.50"` |
+| **All Agent Logs** | `{container="nti-edge-agent-1"}` |
+| **Filter Errors** | `{container="nti-edge-agent-1"} \|= "error" \|= "kafka"` |
+| **Search by IP** | `{container="nti-kafka-sink-1"} \|~ "192.168.1.50"` |
 
 > [!TIP]
 > Click the **Live** button in the top right to stream logs in real-time like `tail -f`.
@@ -100,7 +100,7 @@ curl -H "X-API-Key: hardcore-production-key-2026" \
 ClickHouse handles retention via TTL policies, but you can manually truncate if needed:
 ```bash
 # TRUNCATE ALL METRICS (CAUTION!)
-docker exec network-pj-clickhouse-1 clickhouse-client -q "TRUNCATE TABLE network_telemetry.network_metrics"
+docker exec nti-clickhouse-1 clickhouse-client -q "TRUNCATE TABLE network_telemetry.network_metrics"
 ```
 
 ### 🔄 Restarting the Pipeline
