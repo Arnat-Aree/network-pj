@@ -1,6 +1,6 @@
 # 🧪 Enterprise Network Telemetry - Test Plan
 
-This document outlines the validation strategy for the Network Telemetry Analyzer (NTA) stack, ensuring reliability across data ingestion, storage, and API querying.
+This document outlines the validation strategy for the Network Telemetry Intelligence (NTI) stack, ensuring reliability across data ingestion, storage, and API querying.
 
 ## 1. Unit Testing Strategy
 
@@ -53,5 +53,5 @@ Verify using `kafka-console-consumer` with `client.properties`.
 
 Visual check of the "LGTM" Stack:
 - **Loki**: Check if logs contain `"level":"info"`.
-- **Prometheus**: Check `nta_http_requests_total` metric.
+- **Prometheus**: Check `nti_http_requests_total` metric.
 - **Jaeger**: Verify spans `collect-and-publish` -> `kafka-publish` -> `clickhouse-insert` are linked in a single trace.

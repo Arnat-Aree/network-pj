@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package nta.telemetry.v1;
+package nti.telemetry.v1;
 
 option go_package = "network-pj/edge-agent/internal/pb;pb";
 

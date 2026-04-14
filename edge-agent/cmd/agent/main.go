@@ -58,7 +58,7 @@ func main() {
 		tlsEnabled := cfg.KafkaTLS == "true"
 		tlsInsecure := cfg.KafkaTLSInsecure == "true"
 		// Registry URL from env or default
-		registryURL := os.Getenv("NTA_REGISTRY_URL")
+		registryURL := os.Getenv("NTI_REGISTRY_URL")
 		kp := publisher.NewKafkaPublisher(cfg.KafkaBrokers, tlsEnabled, tlsInsecure, cfg.KafkaSASLUser, cfg.KafkaSASLPass, registryURL)
 		pub = kp
 		defer kp.Close()

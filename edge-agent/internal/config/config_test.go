@@ -3,9 +3,9 @@ package config
 import "testing"
 
 func TestLoadDefaults(t *testing.T) {
-	t.Setenv("NTA_KAFKA_BROKERS", "")
-	t.Setenv("NTA_KAFKA_TOPIC", "")
-	t.Setenv("NTA_EDGE_INTERVAL_SEC", "")
+	t.Setenv("NTI_KAFKA_BROKERS", "")
+	t.Setenv("NTI_KAFKA_TOPIC", "")
+	t.Setenv("NTI_EDGE_INTERVAL_SEC", "")
 
 	cfg := Load()
 	if cfg.KafkaBrokers != "localhost:9092" {
@@ -20,9 +20,9 @@ func TestLoadDefaults(t *testing.T) {
 }
 
 func TestLoadOverrides(t *testing.T) {
-	t.Setenv("NTA_KAFKA_BROKERS", "kafka:9092")
-	t.Setenv("NTA_KAFKA_TOPIC", "topic-a")
-	t.Setenv("NTA_EDGE_INTERVAL_SEC", "5")
+	t.Setenv("NTI_KAFKA_BROKERS", "kafka:9092")
+	t.Setenv("NTI_KAFKA_TOPIC", "topic-a")
+	t.Setenv("NTI_EDGE_INTERVAL_SEC", "5")
 
 	cfg := Load()
 	if cfg.KafkaBrokers != "kafka:9092" || cfg.KafkaTopic != "topic-a" || cfg.IntervalSec != "5" {

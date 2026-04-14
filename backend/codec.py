@@ -8,7 +8,7 @@ from typing import Any
 
 from fastavro import parse_schema, schemaless_reader, schemaless_writer
 
-REGISTRY_URL = os.getenv("NTA_REGISTRY_URL", "http://schema-registry:8081")
+REGISTRY_URL = os.getenv("NTI_REGISTRY_URL", "http://schema-registry:8081")
 SCHEMA_PATH = Path(__file__).resolve().parents[1] / "schemas" / "network_metric.avsc"
 LOCAL_SCHEMA = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
 SCHEMA = parse_schema(LOCAL_SCHEMA)

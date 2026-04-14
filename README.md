@@ -8,7 +8,7 @@
 ---
 
 ## 💎 Project Vision
-**Enterprise NTA** คือระบบวิเคราะห์ทราฟฟิกเครือข่ายความเร็วสูงที่ออกแบบมาเพื่อแก้ไขปัญหา **Data Inundation** (ข้อมูลล้น) ในดาต้าเซนเตอร์ยุคใหม่ โดยใช้หลักการ **Modern Observability (LGTM Stack)** ผสมผสานกับ **High-Performance OLAP Engine (ClickHouse)** และระบบ **Event Streaming (Kafka)** เพื่อให้ได้ความเร็วระดับกิกะบิตและ Latency ที่ต่ำที่สุดในอุตสาหกรรม
+**Enterprise NTI** คือระบบวิเคราะห์ทราฟฟิกเครือข่ายความเร็วสูงที่ออกแบบมาเพื่อแก้ไขปัญหา **Data Inundation** (ข้อมูลล้น) ในดาต้าเซนเตอร์ยุคใหม่ โดยใช้หลักการ **Modern Observability (LGTM Stack)** ผสมผสานกับ **High-Performance OLAP Engine (ClickHouse)** และระบบ **Event Streaming (Kafka)** เพื่อให้ได้ความเร็วระดับกิกะบิตและ Latency ที่ต่ำที่สุดในอุตสาหกรรม
 
 ---
 
@@ -49,7 +49,7 @@ graph TD
 
 ## 🌟 Key Enterprise Capabilities
 
-| Feature | Standard Solution | **NTA Enterprise Edition** |
+| Feature | Standard Solution | **NTI Enterprise Edition** |
 | :--- | :--- | :--- |
 | **Data Format** | JSON (Heavy/Slow) | **Avro Binary (Compact/Schema-Strict)** |
 | **Security** | Plaintext / No Auth | **SASL/TLS + X-API-Key Authorization** |
@@ -60,7 +60,7 @@ graph TD
 ---
 
 ## 🔐 Defense-in-Depth Security
-ระบบ NTA ถูก Hardening เพื่อใช้งานในธนาคารและองค์กรขนาดใหญ่:
+ระบบ NTI ถูก Hardening เพื่อใช้งานในธนาคารและองค์กรขนาดใหญ่:
 - **Zero-Trust API**: ทุก Endpoint ถูกป้องกันด้วย Middleware ที่ตรวจสอบ `X-API-Key`
 - **Wire Encryption**: ข้อมูลวิ่งระหว่าง Edge และ Data Center ผ่าน **SSL/TLS (Port 9093)**
 - **Schema Enforcement**: ป้องกัน **Malformed Data** ด้วย **Schema Registry** แบบเข้มงวด

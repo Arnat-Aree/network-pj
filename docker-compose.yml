@@ -76,8 +76,8 @@ services:
         hard: 262144
     environment:
       CLICKHOUSE_DB: network_telemetry
-      CLICKHOUSE_USER: ${NTA_CH_USER:-default}
-      CLICKHOUSE_PASSWORD: ${NTA_CH_PASSWORD:-NTI_Secure_2026}
+      CLICKHOUSE_USER: ${NTI_CH_USER:-default}
+      CLICKHOUSE_PASSWORD: ${NTI_CH_PASSWORD:-NTI_Secure_2026}
       CLICKHOUSE_SECURE_CERT_DIR: /etc/clickhouse/certs
     volumes:
       - clickhouse_data:/var/lib/clickhouse
@@ -162,7 +162,7 @@ services:
       - "8000:8000"
     env_file: .env
     environment:
-      NTA_CH_HOST: clickhouse
+      NTI_CH_HOST: clickhouse
       OTEL_COLLECTOR: jaeger:4317
 
   kafka-sink:
@@ -203,10 +203,10 @@ services:
       - "9091:9091"
     env_file: .env
     environment:
-      NTA_KAFKA_BROKERS: "kafka:9092"
-      NTA_KAFKA_TOPIC: ${NTA_KAFKA_TOPIC:-network-telemetry-avro}
-      NTA_PUBLISHER: "kafka"
-      NTA_REGISTRY_URL: "http://schema-registry:8081"
+      NTI_KAFKA_BROKERS: "kafka:9092"
+      NTI_KAFKA_TOPIC: ${NTI_KAFKA_TOPIC:-network-telemetry-avro}
+      NTI_PUBLISHER: "kafka"
+      NTI_REGISTRY_URL: "http://schema-registry:8081"
       OTEL_COLLECTOR: "jaeger:4317"
 
 volumes:

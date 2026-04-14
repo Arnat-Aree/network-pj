@@ -1,6 +1,6 @@
 # 📘 Enterprise Setup & Deployment Guide
 
-This guide provides a comprehensive, step-by-step procedure for deploying the Network Telemetry Analyzer (NTA) stack in a production-ready environment.
+This guide provides a comprehensive, step-by-step procedure for deploying the Network Telemetry Intelligence (NTI) stack in a production-ready environment.
 
 ---
 
@@ -23,7 +23,7 @@ For a stable enterprise environment, ensure your host meets these minimums:
 
 ## 2. Security & Certificate Management
 
-The NTA stack uses a **Defense-in-Depth** security model. In a production environment, you must initialize the SSL/TLS certificates before starting the services.
+The NTI stack uses a **Defense-in-Depth** security model. In a production environment, you must initialize the SSL/TLS certificates before starting the services.
 
 ### 🔐 Certificate Hierarchy
 The system uses a Private Certificate Authority (CA) to sign all service certificates:
@@ -51,10 +51,10 @@ Clone `.env.sample` to `.env` and adjust the variables based on your network top
 
 | Variable | Default Value | Technical Impact |
 | :--- | :--- | :--- |
-| `NTA_CH_PASSWORD` | `NTI_Secure_2026` | Root password for ClickHouse. |
-| `NTA_API_KEY` | `hardcore-production-key-2026` | Master key for the FastAPI analytics layer. |
-| `NTA_KAFKA_TLS` | `true` | When true, services will use port 9093 with SSL/TLS. |
-| `NTA_EDGE_INTERVAL_SEC` | `1` | Collection frequency. Lowering this increases load on Kafka/CH. |
+| `NTI_CH_PASSWORD` | `NTI_Secure_2026` | Root password for ClickHouse. |
+| `NTI_API_KEY` | `hardcore-production-key-2026` | Master key for the FastAPI analytics layer. |
+| `NTI_KAFKA_TLS` | `true` | When true, services will use port 9093 with SSL/TLS. |
+| `NTI_EDGE_INTERVAL_SEC` | `1` | Collection frequency. Lowering this increases load on Kafka/CH. |
 | `ENVIRONMENT` | `development` | Switches logging levels and OTel debugging. |
 
 ---
@@ -80,7 +80,7 @@ The `docker-compose.yml` includes sophisticated healthchecks:
 
 ### ❌ Kafka Connection Denied
 - **Symptoms**: `edge-agent` logs show `connection refused to localhost:9092`.
-- **Fix**: Check if `NTA_KAFKA_BROKERS` is set correctly. Inside Docker, it should be `kafka:9092`. Outside Docker, use `localhost:9092`.
+- **Fix**: Check if `NTI_KAFKA_BROKERS` is set correctly. Inside Docker, it should be `kafka:9092`. Outside Docker, use `localhost:9092`.
 
 ### ❌ ClickHouse Write Lag
 - **Symptoms**: `kafka-sink` logs show `Batch insert timeout`.

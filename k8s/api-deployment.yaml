@@ -1,26 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nta-api
+  name: nti-api
   labels:
-    app: nta-api
+    app: nti-api
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: nta-api
+      app: nti-api
   template:
     metadata:
       labels:
-        app: nta-api
+        app: nti-api
     spec:
-      serviceAccountName: nta-api-sa
+      serviceAccountName: nti-api-sa
       containers:
-        - name: nta-api
+        - name: nti-api
           image: network-pj/backend-api:latest
           envFrom:
             - secretRef:
-                name: nta-secrets
+                name: nti-secrets
           ports:
             - containerPort: 8000
           readinessProbe:
@@ -35,10 +35,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nta-api
+  name: nti-api
 spec:
   selector:
-    app: nta-api
+    app: nti-api
   ports:
     - protocol: TCP
       port: 80

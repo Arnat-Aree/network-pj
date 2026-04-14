@@ -81,7 +81,7 @@ graph TD
 
 ## 📚 4. Comprehensive API Reference (v1.0)
 
-Every request must include the header: `X-API-Key: ${NTA_API_KEY}`.
+Every request must include the header: `X-API-Key: ${NTI_API_KEY}`.
 
 | Endpoint | Method | Params | Description | Response Example |
 | :--- | :--- | :--- | :--- | :--- |
@@ -146,7 +146,7 @@ GROUP BY src_ip;
 | **Edge Agent Down** | Data Gap at 1-node | Check Agent logs; Verify Ticker integrity. | < 2 min |
 | **Kafka Corruption** | Potential Data Loss | Reset Consumer Offset; Cleanup `Zookeeper` state. | < 15 min |
 | **ClickHouse OOM** | Write Failures | Scale Docker RAM; Partition pruning; Clean TTL. | < 10 min |
-| **API Key Leak** | Security Breach | Rotated `NTA_API_KEY` in Secret Manager (VPC). | < 5 min |
+| **API Key Leak** | Security Breach | Rotated `NTI_API_KEY` in Secret Manager (VPC). | < 5 min |
 
 ---
 
@@ -167,9 +167,9 @@ Tested on **Standard Enterprise Node: 8 vCPU, 32GB RAM, 500GB NVMe**.
 
 ### 🔭 Advanced PromQL Examples
 1. **Pipeline Throughput**:
-   `rate(nta_ingested_events_total[1m])`
+   `rate(nti_ingested_events_total[1m])`
 2. **Database Write Lag**:
-   `nta_sink_queue_size > 50000` (Trigger Alert)
+   `nti_sink_queue_size > 50000` (Trigger Alert)
 
 ### 🔍 Loki Forensic LogQL
 `{job="edge-agent"} |= "error" | json | status > 400`
@@ -195,7 +195,7 @@ ALTER TABLE network_metrics MODIFY TTL ts + INTERVAL 180 DAY;
 
 | Variable | Scope | Description | Default |
 | :--- | :--- | :--- | :--- |
-| `NTA_API_KEY` | Backend | Master Auth Token | `hardcore-key` |
+| `NTI_API_KEY` | Backend | Master Auth Token | `hardcore-key` |
 | `KAFKA_BOOTSTRAP`| Pipeline | Broker Address (SSL) | `kafka:9093` |
 | `CH_HOST` | Sink | ClickHouse Cluster IP | `clickhouse` |
 | `OTEL_COLLECTOR` | Full Stack| Jaeger gRPC endpoint | `jaeger:4317` |

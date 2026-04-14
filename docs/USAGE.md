@@ -1,6 +1,6 @@
 # 🖥️ Enterprise Operational Usage Guide
 
-This manual is for Network Operations Center (NOC) operators and SREs to understand how to monitor, investigate, and analyze data using the NTA platform.
+This manual is for Network Operations Center (NOC) operators and SREs to understand how to monitor, investigate, and analyze data using the NTI platform.
 
 ---
 

@@ -1,12 +1,12 @@
 # 🛡️ Enterprise Security Policy
 
-This document defines the security standards, vulnerability reporting procedures, and the response policy for the Network Telemetry Analyzer (NTA) project.
+This document defines the security standards, vulnerability reporting procedures, and the response policy for the Network Telemetry Intelligence (NTI) project.
 
 ---
 
 ## 1. Supported Versions
 
-We provide security updates for the following versions of NTA:
+We provide security updates for the following versions of NTI:
 
 | Version | Status | Security Support |
 | :--- | :--- | :--- |
@@ -18,7 +18,7 @@ We provide security updates for the following versions of NTA:
 
 ## 2. Reporting a Vulnerability
 
-We take the security of our enterprise telemetry pipeline seriously. If you believe you have found a security vulnerability in NTA, please follow the process below:
+We take the security of our enterprise telemetry pipeline seriously. If you believe you have found a security vulnerability in NTI, please follow the process below:
 
 1.  **Do NOT open a public GitHub Issue**.
 2.  Submit a detailed report to the **Private Security Channel** or email the repository owner directly.
@@ -41,7 +41,7 @@ We take the security of our enterprise telemetry pipeline seriously. If you beli
 
 ## 4. Default Security Baseline
 
-The following architectural decisions are baked into the NTA stack:
+The following architectural decisions are baked into the NTI stack:
 
 - **Auth-by-Default**: Every API endpoint is protected by `X-API-Key` middleware.
 - **Wire Encryption**: Kafka traffic is encrypted via **SSL/TLS**.
@@ -52,7 +52,7 @@ The following architectural decisions are baked into the NTA stack:
 
 ## 5. Security Checklist (Production)
 
-- [ ] Change the default `NTA_API_KEY` in your `.env`.
+- [ ] Change the default `NTI_API_KEY` in your `.env`.
 - [ ] Rotate Certs/JKS passwords every 90 days (See `docs/SETUP.md`).
 - [ ] Ensure ClickHouse is running in a private VPC subnet.
 - [ ] Enable SASL/SCRAM for Kafka client authentication.

@@ -20,7 +20,7 @@ spec:
           image: network-pj/edge-agent:latest
           envFrom:
             - secretRef:
-                name: nta-secrets
+                name: nti-secrets
           ports:
             - containerPort: 9090 # metrics
           resources:

@@ -1,7 +1,7 @@
 {
   "type": "record",
   "name": "NetworkMetric",
-  "namespace": "nta.telemetry",
+  "namespace": "nti.telemetry",
   "fields": [
     { "name": "ts", "type": "string" },
     { "name": "src_ip", "type": "string" },

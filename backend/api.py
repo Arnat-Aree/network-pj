@@ -39,7 +39,7 @@ init_tracer()
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_prefix="NTA_")
+    model_config = SettingsConfigDict(env_prefix="NTI_")
 
     ch_host: str = Field(default="localhost", description="ClickHouse HTTP host")
     ch_port: int = Field(default=8123, description="ClickHouse HTTP port")
@@ -77,8 +77,8 @@ app = FastAPI(
 FastAPIInstrumentor.instrument_app(app)
 
 # Prometheus metrics
-REQUESTS = Counter("nta_http_requests_total", "Total HTTP requests", ["path"])
-LATENCY = Summary("nta_http_latency_seconds", "HTTP request latency", ["path"])
+REQUESTS = Counter("nti_http_requests_total", "Total HTTP requests", ["path"])
+LATENCY = Summary("nti_http_latency_seconds", "HTTP request latency", ["path"])
 
 
 @app.get("/metrics")

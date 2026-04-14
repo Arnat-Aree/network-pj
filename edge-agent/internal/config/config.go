@@ -15,14 +15,14 @@ type Config struct {
 
 func Load() Config {
 	return Config{
-		KafkaBrokers: getenv("NTA_KAFKA_BROKERS", "localhost:9092"),
-		KafkaTopic:   getenv("NTA_KAFKA_TOPIC", "network-telemetry-avro"),
-		IntervalSec:  getenv("NTA_EDGE_INTERVAL_SEC", "1"),
-		Publisher:    getenv("NTA_PUBLISHER", "stdout"),
-	KafkaTLS:         getenv("NTA_KAFKA_TLS", "false"),
-	KafkaTLSInsecure: getenv("NTA_KAFKA_TLS_INSECURE", "false"),
-	KafkaSASLUser:    getenv("NTA_KAFKA_SASL_USER", ""),
-	KafkaSASLPass:    getenv("NTA_KAFKA_SASL_PASS", ""),
+		KafkaBrokers: getenv("NTI_KAFKA_BROKERS", "localhost:9092"),
+		KafkaTopic:   getenv("NTI_KAFKA_TOPIC", "network-telemetry-avro"),
+		IntervalSec:  getenv("NTI_EDGE_INTERVAL_SEC", "1"),
+		Publisher:    getenv("NTI_PUBLISHER", "stdout"),
+	KafkaTLS:         getenv("NTI_KAFKA_TLS", "false"),
+	KafkaTLSInsecure: getenv("NTI_KAFKA_TLS_INSECURE", "false"),
+	KafkaSASLUser:    getenv("NTI_KAFKA_SASL_USER", ""),
+	KafkaSASLPass:    getenv("NTI_KAFKA_SASL_PASS", ""),
 	}
 }
 

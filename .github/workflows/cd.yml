@@ -34,7 +34,7 @@ jobs:
       #     mkdir -p $HOME/.kube
       #     echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
       #     kubectl set image deployment/edge-agent edge-agent=${{ secrets.REGISTRY_HOST }}/network-pj/edge-agent:${{ github.sha }} --record || true
-      #     kubectl set image deployment/nta-api nta-api=${{ secrets.REGISTRY_HOST }}/network-pj/backend-api:${{ github.sha }} --record || true
+      #     kubectl set image deployment/nti-api nti-api=${{ secrets.REGISTRY_HOST }}/network-pj/backend-api:${{ github.sha }} --record || true
       #     kubectl apply -f k8s/edge-agent-deployment.yaml || true
       #     kubectl apply -f k8s/api-deployment.yaml || true
       #   env:

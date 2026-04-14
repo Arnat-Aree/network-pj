@@ -2,7 +2,7 @@ Kubernetes deployment notes
 
 1) Create TLS/SASL secrets (example):
 
-kubectl create secret generic nta-secrets \
+kubectl create secret generic nti-secrets \
   --from-literal=CLICKHOUSE_PASSWORD="supersecret" \
   --from-literal=KAFKA_SASL_USER="kafka_user" \
   --from-literal=KAFKA_SASL_PASS="kafka_pass"
