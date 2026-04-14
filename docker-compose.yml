@@ -169,6 +169,7 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
+    entrypoint: ["python", "backend/kafka_clickhouse_sink.py"]
     command: ["--kafka", "kafka:9092", "--ch-host", "clickhouse", "--ch-password", "NTI_Secure_2026", "--group", "nti-storage-sink"]
     depends_on:
       kafka:

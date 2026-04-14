@@ -81,21 +81,19 @@ graph TD
 Explore the three layers of our production-ready telemetry stack:
 
 ### 📊 Layer 1: NOC Operational Dashboard (Grafana)
-*Real-time bandwidth, Top Talkers (Materialized Views), and pipeline health.*
+*Real-time bandwidth, Top Talkers (Materialized Views), and pipeline health (Authentic System View).*
 <div align="center">
-  <img src="./docs/media/network_telemetry_dashboard_1776062357071.png" width="90%" alt="NOC Dashboard">
+  <img src="./docs/media/network_telemetry_hero_dashboard.png" width="90%" alt="NOC Dashboard">
 </div>
 
-### 🧭 Layer 2: Distributed Tracing (Jaeger)
-*Hop-by-hop latency analysis from Edge Agent to ClickHouse Storage.*
+*Hop-by-hop latency analysis from Edge Agent to ClickHouse Storage (Authentic System Trace).*
 <div align="center">
-  <img src="./docs/media/jaeger_trace_details_1776062908024.png" width="90%" alt="Distributed Tracing">
+  <img src="./docs/media/jaeger_trace_authentic.png" width="90%" alt="Distributed Tracing">
 </div>
 
-### 🔍 Layer 3: Centralized Log Analytics (Loki)
-*Structured JSON logs with high-cardinality indexing and 7-day retention.*
+*Structured JSON logs with high-cardinality indexing and 7-day retention (Authentic System Logs).*
 <div align="center">
-  <img src="./docs/media/loki_logs_broad_1776062676020.png" width="90%" alt="Loki Logs">
+  <img src="./docs/media/loki_logs_authentic.png" width="90%" alt="Loki Logs">
 </div>
 
 ---
