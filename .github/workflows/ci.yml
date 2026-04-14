@@ -40,16 +40,21 @@ jobs:
         uses: docker/setup-buildx-action@v2
       - name: Build edge-agent image
         run: |
-          docker build -t network-pj/edge-agent:latest -f edge-agent/Dockerfile .
+          docker build -t nti/edge-agent:latest -f edge-agent/Dockerfile .
       - name: Build backend api image
         run: |
-          docker build -t network-pj/backend-api:latest -f backend/Dockerfile .
-      - name: Scan images with Trivy
+          docker build -t nti/backend-api:latest -f backend/Dockerfile .
+      - name: Scan edge-agent with Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: |
-            network-pj/edge-agent:latest
-            network-pj/backend-api:latest
+          image-ref: 'nti/edge-agent:latest'
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+      - name: Scan backend-api with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'nti/backend-api:latest'
           format: 'table'
           exit-code: '1'
           severity: 'CRITICAL,HIGH'
