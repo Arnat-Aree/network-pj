@@ -2,6 +2,9 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Create a non-root user and group
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 RUN groupadd -r nonroot && useradd -m -r -g nonroot nonroot
 
 # Copy requirements and install
