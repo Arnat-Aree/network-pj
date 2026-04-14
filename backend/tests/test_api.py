@@ -50,7 +50,8 @@ def test_top_talkers_ok() -> None:
     api.get_client = lambda: DummyClient()
     try:
         client = TestClient(api.app)
-        r = client.get("/api/v1/top-talkers?limit=2")
+        headers = {"X-API-Key": "admin-api-key"}
+        r = client.get("/api/v1/top-talkers?limit=2", headers=headers)
         assert r.status_code == 200
         assert r.json()[0]["src_ip"] == "10.0.0.1"
     finally:
@@ -62,7 +63,8 @@ def test_bandwidth_per_minute_ok() -> None:
     api.get_client = lambda: DummyClient()
     try:
         client = TestClient(api.app)
-        r = client.get("/api/v1/bandwidth-per-minute?minutes=5")
+        headers = {"X-API-Key": "admin-api-key"}
+        r = client.get("/api/v1/bandwidth-per-minute?minutes=5", headers=headers)
         assert r.status_code == 200
         assert r.json()[0]["total_bytes"] == 3000
     finally:
@@ -71,7 +73,8 @@ def test_bandwidth_per_minute_ok() -> None:
 
 def test_validation_errors() -> None:
     client = TestClient(api.app)
-    r1 = client.get("/api/v1/top-talkers?limit=0")
-    r2 = client.get("/api/v1/bandwidth-per-minute?minutes=0")
+    headers = {"X-API-Key": "admin-api-key"}
+    r1 = client.get("/api/v1/top-talkers?limit=0", headers=headers)
+    r2 = client.get("/api/v1/bandwidth-per-minute?minutes=0", headers=headers)
     assert r1.status_code == 400
     assert r2.status_code == 400
