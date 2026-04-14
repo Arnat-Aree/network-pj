@@ -24,17 +24,17 @@ jobs:
       #   run: |
       #     docker build -t ${{ secrets.REGISTRY_HOST }}/network-pj/edge-agent:${{ github.sha }} -f edge-agent/Dockerfile .
       #     docker push ${{ secrets.REGISTRY_HOST }}/network-pj/edge-agent:${{ github.sha }}
-      # - name: Build and push lab-api
+      # - name: Build and push backend-api
       #   run: |
-      #     docker build -t ${{ secrets.REGISTRY_HOST }}/network-pj/lab-api:${{ github.sha }} -f lab/Dockerfile .
-      #     docker push ${{ secrets.REGISTRY_HOST }}/network-pj/lab-api:${{ github.sha }}
+      #     docker build -t ${{ secrets.REGISTRY_HOST }}/network-pj/backend-api:${{ github.sha }} -f backend/Dockerfile .
+      #     docker push ${{ secrets.REGISTRY_HOST }}/network-pj/backend-api:${{ github.sha }}
       # - name: Deploy to Kubernetes
       #   run: |
       #     echo "Setting up kubeconfig"
       #     mkdir -p $HOME/.kube
       #     echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
       #     kubectl set image deployment/edge-agent edge-agent=${{ secrets.REGISTRY_HOST }}/network-pj/edge-agent:${{ github.sha }} --record || true
-      #     kubectl set image deployment/nta-api nta-api=${{ secrets.REGISTRY_HOST }}/network-pj/lab-api:${{ github.sha }} --record || true
+      #     kubectl set image deployment/nta-api nta-api=${{ secrets.REGISTRY_HOST }}/network-pj/backend-api:${{ github.sha }} --record || true
       #     kubectl apply -f k8s/edge-agent-deployment.yaml || true
       #     kubectl apply -f k8s/api-deployment.yaml || true
       #   env:

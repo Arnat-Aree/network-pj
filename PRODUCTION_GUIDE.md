@@ -1,6 +1,6 @@
 # Production Deployment Guide
 
-This document outlines minimum requirements and steps to move the project from lab to production.
+This document outlines minimum requirements and steps to move the project from evaluation to enterprise-ready deployment.
 
 1) Secrets management
   - Use a secrets store (HashiCorp Vault, AWS Secrets Manager, or Kubernetes Secrets).

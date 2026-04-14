@@ -1,5 +1,5 @@
 apiVersion: v2
 name: network-pj
-description: Helm chart for network-pj services (edge-agent, api)
+description: Enterprise-grade Network Telemetry Intelligence (NTI) Helm Chart
 version: 0.1.0
 appVersion: "0.1.0"
