@@ -62,6 +62,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
       - name: Validate Avro schema
         run: |
+          pip install fastavro
           python - <<'PY'
           import json
           from fastavro import parse_schema
