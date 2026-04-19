@@ -50,3 +50,5 @@ Checklist (Implemented in this Repository):
   - [x] Container Hardening: All images run as `nonroot`
   - [x] DevOps: Helm charts + K8s manifests baseline provided
   - [x] Scalability: Structure ready for GitOps and HPA
+  - [x] CI/CD: GitHub Actions pipeline — **lint, test, build, scan, validate** (All Green ✅)
+  - [x] Integration Test: Docker Compose **13/13 containers healthy** with real data flowing

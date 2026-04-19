@@ -1,9 +1,10 @@
 # 🚀 Network Telemetry Intelligence (NTI) v7.0
 ### *Next-Generation Intelligent Traffic Analysis & Observability Cloud-Native Stack*
 
-[![Status](https://img.shields.io/badge/Status-Production--Ready-brightgreen?style=for-the-badge&logo=rocket)](https://github.com/)
-[![License](https://img.shields.io/badge/License-Enterprise-blue?style=for-the-badge&logo=security-scorecard)](https://github.com/)
-[![Architecture](https://img.shields.io/badge/Arch-Event--Driven-orange?style=for-the-badge&logo=diagram)](https://github.com/)
+[![CI](https://github.com/Arnat-Aree/network-pj/actions/workflows/ci.yml/badge.svg)](https://github.com/Arnat-Aree/network-pj/actions/workflows/ci.yml)
+[![Status](https://img.shields.io/badge/Status-Production--Ready-brightgreen?style=for-the-badge&logo=rocket)](https://github.com/Arnat-Aree/network-pj)
+[![License](https://img.shields.io/badge/License-Enterprise-blue?style=for-the-badge&logo=security-scorecard)](https://github.com/Arnat-Aree/network-pj)
+[![Architecture](https://img.shields.io/badge/Arch-Event--Driven-orange?style=for-the-badge&logo=diagram)](https://github.com/Arnat-Aree/network-pj)
 
 ---
 
@@ -122,8 +123,20 @@ Explore the three layers of our production-ready telemetry stack:
    ```bash
    docker compose up -d --build
    ```
-3. **Explore Dashboard**:
-   - URL: `http://localhost:3001` (Admin: `admin/admin`)
+3. **Explore Services**:
+   - 📊 **Grafana Dashboard**: `http://localhost:3001` (Login: `admin/admin`)
+   - 🔍 **Jaeger Tracing**: `http://localhost:16686`
+   - 📡 **FastAPI Docs**: `http://localhost:8000/docs`
+   - 📈 **Prometheus**: `http://localhost:9090`
+
+### 🧹 Clean Reset (Stop & Remove Everything)
+```bash
+# Stop all containers, remove volumes, images, and orphans
+docker compose down -v --rmi all --remove-orphans
+
+# Remove generated certificates
+rm -rf certs/*.pem certs/*.srl certs/*.jks certs/*.pkcs12
+```
 
 ---
 
@@ -131,16 +144,21 @@ Explore the three layers of our production-ready telemetry stack:
 ```text
 .
 ├── 🐝 edge-agent/           # Go Collector (High Performance)
-├── 🐍 backend/              # Python Intelligence Layer
-├── 🚢 k8s / helm           # Production Orchestration
-├── 🛡️ certs/                # Security Crypto Stores
-├── 📊 grafana/              # NOC Visual Assets
-├── 🧪 tests/                # System Validation Suite
-└── 🐳 docker-compose.yml     # The Deployment Engine
+├── 🐍 backend/              # Python Intelligence Layer (API + Sink + Tests)
+├── 🚢 k8s/ & helm/          # Production Orchestration (Kubernetes + Helm)
+├── 🛡️ certs/                # Security Crypto Stores (TLS/JKS)
+├── 📊 grafana/              # NOC Visual Assets & Provisioning
+├── 📡 prometheus/           # Metrics Scraping Config
+├── 🔍 monitoring/           # Observability Stack Config
+├── 📋 schemas/              # Avro Schema Definitions
+├── 📚 docs/                 # SETUP.md, USAGE.md, Media
+├── 🔒 .github/workflows/   # CI/CD Pipeline (GitHub Actions)
+└── 🐳 docker-compose.yml    # The Deployment Engine (13 Services)
 ```
 
 ---
 
 ## 📜 Legal & Support
-**Status**: Experimental Production Baseline.
+**Status**: ✅ Production Ready (CI/CD Verified — 2026-04-19)  
+**Repository**: [github.com/Arnat-Aree/network-pj](https://github.com/Arnat-Aree/network-pj)  
 **Support**: For enterprise support and customization, consult the internal architecture team.

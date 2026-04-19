@@ -2,6 +2,9 @@
 
 This document outlines the validation strategy for the Network Telemetry Intelligence (NTI) stack, ensuring reliability across data ingestion, storage, and API querying.
 
+> [!NOTE]
+> **Last Verified**: 2026-04-19 — All tests passing on GitHub Actions (CI #25) and local machine.
+
 ## 1. Unit Testing Strategy
 
 ### 🛰️ Edge Agent (Go)
@@ -13,11 +16,13 @@ Unit tests for the collection logic, ticker, and publishers.
 
 ### 🐍 Backend Services (Python)
 Uses `pytest` for validating the API, Sink, and Codec logic.
-- **Command**: `pytest backend/tests`
+- **Command**: `PYTHONPATH=$(pwd)/backend pytest backend/tests -q`
 - **Modules Covered**:
-    - `api.py`: Mocking ClickHouse to test FastAPI endpoint response structure.
-    - `codec.py`: Testing Avro serialization/deserialization.
-    - `kafka_clickhouse_sink.py`: Testing batching logic and data row formation.
+    - `test_api.py`: Mocking ClickHouse to test FastAPI endpoint response structure (health, top-talkers, bandwidth, validation).
+    - `test_codec.py`: Testing Avro serialization/deserialization.
+    - `test_sink.py`: Testing batching logic, timestamp parsing, and data row formation.
+    - `test_mock_producer.py`: Validating mock data generation.
+- **Latest Result**: ✅ **9/9 Passed**
 
 ---
 
@@ -55,3 +60,16 @@ Visual check of the "LGTM" Stack:
 - **Loki**: Check if logs contain `"level":"info"`.
 - **Prometheus**: Check `nti_http_requests_total` metric.
 - **Jaeger**: Verify spans `collect-and-publish` -> `kafka-publish` -> `clickhouse-insert` are linked in a single trace.
+
+---
+
+## 5. CI/CD Automated Validation (GitHub Actions)
+
+The CI pipeline automatically runs on every push to `main`:
+
+| Job | Steps | Status |
+| :--- | :--- | :--- |
+| **lint-and-test** | Go tests + Python tests | ✅ Passing |
+| **build-images** | Docker build + Trivy scan + Avro validation | ✅ Passing |
+
+**Workflow**: `.github/workflows/ci.yml`

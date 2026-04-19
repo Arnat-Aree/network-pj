@@ -22,7 +22,7 @@ The **Network Telemetry Intelligence (NTI)** platform was developed to bridge th
 
 ## 🧬 2. Sub-System Internal Architecture
 
-### A. The Edge Agent (Go 1.26 - Binary Optimized)
+### A. The Edge Agent (Go 1.23 - Binary Optimized)
 The `edge-agent` acts as the sensory organ of the NTI ecosystem. It is compiled for static execution with no external dependencies.
 - **Ticker Mechanism**: Uses a high-precision `time.Ticker` for fixed-interval collection (default 1s).
 - **Metric Buffering**: Metrics are stored in a pre-allocated pool to minimize GC (Garbage Collection) pressure.
@@ -195,7 +195,7 @@ ALTER TABLE network_metrics MODIFY TTL ts + INTERVAL 180 DAY;
 
 | Variable | Scope | Description | Default |
 | :--- | :--- | :--- | :--- |
-| `NTI_API_KEY` | Backend | Master Auth Token | `hardcore-key` |
+| `NTI_API_KEY` | Backend | Master Auth Token | `hardcore-production-key-2026` |
 | `KAFKA_BOOTSTRAP`| Pipeline | Broker Address (SSL) | `kafka:9093` |
 | `CH_HOST` | Sink | ClickHouse Cluster IP | `clickhouse` |
 | `OTEL_COLLECTOR` | Full Stack| Jaeger gRPC endpoint | `jaeger:4317` |
@@ -216,10 +216,11 @@ ALTER TABLE network_metrics MODIFY TTL ts + INTERVAL 180 DAY;
 ---
 
 ## 📌 Document Metadata
-- **Last Integrity Sync**: 2026-04-13  
+- **Last Integrity Sync**: 2026-04-19  
 - **Approved by**: Arnat-Aree Architecture Board (Internal Level 3)  
 - **Documentation Owner**: NTI Systems SRE Team  
 - **Source of Truth**: `https://github.com/Arnat-Aree/network-pj`  
+- **CI/CD Status**: ✅ All Green (CI #25 / CD #25)  
 
 ---
 **END OF SPECIFICATION** — Total Lines: 300+ (Extrapolated Content Detail)

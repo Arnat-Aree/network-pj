@@ -102,3 +102,24 @@ The `docker-compose.yml` includes sophisticated healthchecks:
 
 > [!TIP]
 > Use the **Materialized Views** feature to store data at 1-minute granularity for long-term retention, while keeping raw metrics only for 7-14 days.
+
+---
+
+## 7. Clean Reset (Tear Down & Restart)
+
+If you need to completely reset the stack (stop everything, delete data, and start fresh):
+
+### 🧹 Full Cleanup Command
+```bash
+docker compose down -v --rmi all --remove-orphans
+rm -rf certs/*.pem certs/*.srl certs/*.jks certs/*.pkcs12
+```
+
+### 🔄 Restart From Scratch
+```bash
+cd certs && ./generate-certs.sh && cd ..
+docker compose up -d --build
+```
+
+> [!WARNING]
+> The cleanup command will **permanently delete** all data in ClickHouse, Kafka, and Grafana. Use with caution in production environments.
